@@ -1,0 +1,27 @@
+steps:
+  - name: 'gcr.io/cloud-builders/mvn:latest'
+    args: ['kotlin:compile']
+    dir: '${_APP_NAME}'
+  - name: 'gcr.io/cloud-builders/mvn:latest'
+    args: ['install']
+    dir: '${_APP_NAME}'
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '--tag=gcr.io/$PROJECT_ID/${_APP_NAME}', '.']
+    dir: '${_APP_NAME}'
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', '${_APP_NAME}', '.']
+    dir: '${_APP_NAME}'
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['tag', '${_APP_NAME}', 'gcr.io/$PROJECT_ID/${_APP_NAME}']
+    dir: '${_APP_NAME}'
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/$PROJECT_ID/${_APP_NAME}']
+    dir: '${_APP_NAME}'
+  - name: 'gcr.io/cloud-builders/kubectl'
+    args: ['apply', '-f', 'deployment-test.yml']
+    dir: '${_APP_NAME}/k8s'
+    env:
+      - 'CLOUDSDK_CONTAINER_CLUSTER=profitus-test-cluster'
+      - 'CLOUDSDK_COMPUTE_ZONE=europe-north1'
+substitutions:
+  _APP_NAME: name

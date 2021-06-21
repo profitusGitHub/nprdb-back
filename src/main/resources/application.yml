@@ -1,0 +1,29 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://ec2-176-34-105-15.eu-west-1.compute.amazonaws.com:5432/d6baj6hfk8adnq
+    username: wxtfsxwfrztacf
+    password: 687959a42db6ef4dd2cd5f8774f771280b17096e82b8a2e256df6183df8fd96b
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+server:
+  port : 8081
+
+data:
+  predifined:
+    financial:
+      typ-scrtstn: 7
+    counterparty-reference:
+      rprtng-agn-cd: 304570552
+
+security:
+  whitelist-ips:
+    - 78.61.234.239
+    - 31.44.96.12
+    - 84.15.148.130
+    - 88.119.26.156
+    - 35.228.68.66
+    - 90.138.63.242
+    - 127.0.0.1
